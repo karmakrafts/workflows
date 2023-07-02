@@ -45,7 +45,8 @@ jobs:
       - name: Build (${{inputs.platform_name}})
         run: >-
           cmake --build ${{github.workspace}}/build-${{inputs.platform_name}} 
-          --config ${{env.BUILD_TYPE}} --clean-first
+          --config ${{env.BUILD_TYPE}} 
+          --clean-first
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}
         run: ctest -C ${{env.BUILD_TYPE}}
