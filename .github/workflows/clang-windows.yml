@@ -47,8 +47,8 @@ jobs:
           -DCMAKE_CXX_STANDARD=${{inputs.std_version}}
       - name: Build (${{inputs.platform_name}})
         run: >-
-          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}} 
-          --config ${{env.BUILD_TYPE}} 
+          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}
+          --config ${{env.BUILD_TYPE}}
           --clean-first
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}

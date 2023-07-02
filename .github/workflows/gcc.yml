@@ -29,13 +29,13 @@ jobs:
         run: sudo apt install -y gcc-${{inputs.version}} g++-${{inputs.version}}
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
-          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}} 
-          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -DCMAKE_CXX_STANDARD=${{inputs.std_version}}
       - name: Build (${{inputs.platform_name}})
         run: >-
-          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}} 
-          --config ${{env.BUILD_TYPE}} 
+          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}
+          --config ${{env.BUILD_TYPE}}
           --clean-first
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}
