@@ -33,20 +33,25 @@ jobs:
           version: ${{inputs.version}}
           env: true
           cached: ${{steps.cache-llvm.outputs.cache-hit}}
-      - name: Initialize submodules
+      - name: Initialize Submodules
         run: git submodule update --init
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
-          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}
+          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
           -DCMAKE_CXX_FLAGS=-stdlib=libc++
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -DGTEST_USE_OWN_TR1_TUPLE=1
           -DCMAKE_CXX_STANDARD=${{inputs.std_version}}
       - name: Build (${{inputs.platform_name}})
         run: >-
-          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}
+          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
           --config ${{env.BUILD_TYPE}}
           --clean-first
       - name: Test (${{inputs.platform_name}})
-        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}
+        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
         run: ctest -C ${{env.BUILD_TYPE}}
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
+          path: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}/**/*
