@@ -21,24 +21,20 @@ jobs:
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
-      # ---------------------------------------- Cache LLVM & Clang
       - name: Cache LLVM & Clang
         id: cache-llvm
         uses: actions/cache@v3
         with:
           path: ./llvm
           key: llvm-${{inputs.version}}
-      # ---------------------------------------- Install LLVM & Clang
       - name: Install LLVM & Clang
         uses: KyleMayes/install-llvm-action@v1
         with:
           version: ${{inputs.version}}
           env: true
           cached: ${{steps.cache-llvm.outputs.cache-hit}}
-      # ---------------------------------------- Initialize Submodules
       - name: Initialize Submodules
         run: git submodule update --init
-      # ---------------------------------------- CMake Configure
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
           cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
@@ -46,35 +42,11 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -DGTEST_USE_OWN_TR1_TUPLE=1
           -DCMAKE_CXX_STANDARD=${{inputs.std_version}}
-      # ---------------------------------------- CMake Build
       - name: Build (${{inputs.platform_name}})
         run: >-
           cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
           --config ${{env.BUILD_TYPE}}
           --clean-first
-      # ---------------------------------------- Unit Tests
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
         run: ctest -C ${{env.BUILD_TYPE}}
-      # ---------------------------------------- Create Release
-      - name: Create Release
-        uses: comnoco/create-release-action@v2.0.5
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        with:
-          tag_name: ${{github.ref}}
-          release_name: Release ${{github.ref}}
-          draft: false
-          prerelease: false
-          body_path: ${{github.workspace}}/release.md
-      # ---------------------------------------- Upload Release
-      - name: Upload Release
-        uses: alexellis/upload-assets@0.4.0
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        with:
-          asset_paths: '[
-            "${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}/**/*.so",
-            "${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}/**/*.a",
-            "${{github.workspace}}/include/**/*"
-          ]'
