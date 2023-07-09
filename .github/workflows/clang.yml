@@ -53,6 +53,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
+          token: ${{secrets.GITHUB_TOKEN}}
           body_path: body.md
           body: "# Snapshot Release"
           draft: false
