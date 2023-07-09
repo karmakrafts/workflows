@@ -14,7 +14,6 @@ on:
       version:
         required: true
         type: string
-    secrets: inherit
 env:
   BUILD_TYPE: Debug
 jobs:
@@ -60,4 +59,7 @@ jobs:
           prerelease: false
           tag_name: ${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
           fail_on_unmatched_files: false
-          files: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}/**/*
+          files: |
+            ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}/**/*.so
+            ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}/**/*.a
+            ${{github.workspace}}/include/**/*
