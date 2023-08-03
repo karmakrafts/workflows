@@ -26,7 +26,7 @@ jobs:
       - name: Initialize submodules
         run: git submodule update --init
       - name: Install GCC ${{inputs.version}}
-        run: sudo apt update -y && sudo apt upgrade -y && sudo apt install -y gcc-${{inputs.version}} g++-${{inputs.version}}
+        run: sudo apt install -y gcc-${{inputs.version}} g++-${{inputs.version}}
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
           cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}
