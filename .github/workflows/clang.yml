@@ -14,10 +14,23 @@ on:
       version:
         required: true
         type: string
+      cmake_args:
+        required: false
+        type: string
+        default: ""
+      ctest_args:
+        required: false
+        type: string
+        default: ""
+      build_type:
+        required: false
+        type: string
+        default: "Debug"
 env:
-  BUILD_TYPE: Debug
+  BUILD_TYPE: ${{inputs.build_type}}
 jobs:
   build:
+    name: cpp${{inputs.std_version}}-${{inputs.platform_name}}-${{inputs.image_name}}
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
@@ -42,6 +55,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -DGTEST_USE_OWN_TR1_TUPLE=1
           -DCMAKE_CXX_STANDARD=${{inputs.std_version}}
+          ${{inputs.cmake_args}}
       - name: Build (${{inputs.platform_name}})
         run: >-
           cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
@@ -49,4 +63,4 @@ jobs:
           --clean-first
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
-        run: ctest -C ${{env.BUILD_TYPE}}
+        run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}
