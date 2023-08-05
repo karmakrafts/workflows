@@ -32,7 +32,7 @@ env:
   CXX: /usr/bin/g++-${{inputs.version}}
 jobs:
   build:
-    name: cpp${{inputs.std_version}}-${{inputs.platform_name}}-${{inputs.image_name}}
+    name: ${{inputs.platform_name}}-cpp${{inputs.std_version}}-gcc
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
