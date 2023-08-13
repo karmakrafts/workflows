@@ -52,4 +52,4 @@ jobs:
       std_version: ${{inputs.std_version}}
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
-      build_type: ${{inputs.build_type}
+      build_type: ${{inputs.build_type}}
