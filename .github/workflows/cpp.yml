@@ -20,8 +20,8 @@ on:
         default: 20
 jobs:
   # Linux
-  ubuntu-20-04-gcc:
-    name: Ubuntu 20.04 (GCC)
+  linux-x64-gcc11:
+    name: Linux x64/GCC 11
     uses: karmakrafts/workflows/.github/workflows/gcc.yml@master
     with:
       platform_name: ubuntu-20
@@ -31,8 +31,19 @@ jobs:
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
-  ubuntu-20-04-clang:
-    name: Ubuntu 20.04 (Clang)
+  linux-x64-gcc12:
+    name: Linux x64/GCC 12
+    uses: karmakrafts/workflows/.github/workflows/gcc.yml@master
+    with:
+      platform_name: ubuntu-22
+      image_name: ubuntu-22.04
+      std_version: ${{inputs.std_version}}
+      version: 12
+      cmake_args: ${{inputs.cmake_args}}
+      ctest_args: ${{inputs.ctest_args}}
+      build_type: ${{inputs.build_type}}
+  linux-x64-clang15:
+    name: Linux x64/Clang 15
     uses: karmakrafts/workflows/.github/workflows/clang.yml@master
     with:
       platform_name: ubuntu-20
@@ -43,32 +54,9 @@ jobs:
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
 
-  ubuntu-22-04-gcc:
-    name: Ubuntu 22.04 (GCC)
-    uses: karmakrafts/workflows/.github/workflows/gcc.yml@master
-    with:
-      platform_name: ubuntu-22
-      image_name: ubuntu-22.04
-      std_version: ${{inputs.std_version}}
-      version: 12
-      cmake_args: ${{inputs.cmake_args}}
-      ctest_args: ${{inputs.ctest_args}}
-      build_type: ${{inputs.build_type}}
-  ubuntu-22-04-clang:
-    name: Ubuntu 22.04 (Clang)
-    uses: karmakrafts/workflows/.github/workflows/clang.yml@master
-    with:
-      platform_name: ubuntu-22
-      image_name: ubuntu-22.04
-      std_version: ${{inputs.std_version}}
-      version: 15
-      cmake_args: ${{inputs.cmake_args}}
-      ctest_args: ${{inputs.ctest_args}}
-      build_type: ${{inputs.build_type}}
-
   # MacOS
-  macos-11:
-    name: macOS 11 (AppleClang)
+  macos11-clang:
+    name: macOS 11 x64/Clang 13
     uses: karmakrafts/workflows/.github/workflows/clang-macos.yml@master
     with:
       platform_name: macos-11
@@ -77,9 +65,8 @@ jobs:
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
-
-  macos-12:
-    name: macOS 12 (AppleClang)
+  macos12-clang:
+    name: macOS 12 x64/Clang 14
     uses: karmakrafts/workflows/.github/workflows/clang-macos.yml@master
     with:
       platform_name: macos-12
@@ -88,9 +75,8 @@ jobs:
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
-
-  macos-13:
-    name: macOS 13 (AppleClang)
+  macos13-clang:
+    name: macOS 13 x64/Clang 14
     uses: karmakrafts/workflows/.github/workflows/clang-macos.yml@master
     with:
       platform_name: macos-13
@@ -101,8 +87,8 @@ jobs:
       build_type: ${{inputs.build_type}}
 
   # Windows
-  windows-2019-msvc:
-    name: Windows 2019 (MSVC)
+  windows-x64-msvc19-29:
+    name: Windows x64/MSVC 19.29
     uses: karmakrafts/workflows/.github/workflows/msvc.yml@master
     with:
       platform_name: windows-2019
@@ -111,20 +97,8 @@ jobs:
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
-  windows-2019-clang:
-    name: Windows 2019 (Clang)
-    uses: karmakrafts/workflows/.github/workflows/clang-windows.yml@master
-    with:
-      platform_name: windows-2019
-      image_name: windows-2019
-      std_version: ${{inputs.std_version}}
-      version: 15
-      cmake_args: ${{inputs.cmake_args}}
-      ctest_args: ${{inputs.ctest_args}}
-      build_type: ${{inputs.build_type}}
-
-  windows-2022-msvc:
-    name: Windows 2022 (MSVC)
+  windows-x64-msvc19-35:
+    name: Windows x64/MSVC 19.35
     uses: karmakrafts/workflows/.github/workflows/msvc.yml@master
     with:
       platform_name: windows-2022
@@ -133,8 +107,8 @@ jobs:
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
-  windows-2022-clang:
-    name: Windows 2022 (Clang)
+  windows-x64-clang:
+    name: Windows x64/Clang 15
     uses: karmakrafts/workflows/.github/workflows/clang-windows.yml@master
     with:
       platform_name: windows-2022
