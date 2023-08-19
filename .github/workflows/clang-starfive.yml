@@ -27,7 +27,7 @@ env:
   BUILD_TYPE: ${{inputs.build_type}}
 jobs:
   build:
-    runs-on: [self-hosted, linux, riscv64]
+    runs-on: ["riscv64"]
     steps:
       - uses: actions/checkout@v3
       - name: Initialize Submodules
