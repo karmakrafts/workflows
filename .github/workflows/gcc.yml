@@ -2,6 +2,9 @@ name: GCC
 on:
   workflow_call:
     inputs:
+      name: 
+        required: true
+        type: string
       platform_name:
         required: true
         type: string
@@ -32,6 +35,7 @@ env:
   CXX: /usr/bin/g++-${{inputs.version}}
 jobs:
   build:
+    name: ${{inputs.name}}
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3

@@ -2,6 +2,9 @@ name: Clang
 on:
   workflow_call:
     inputs:
+      name: 
+        required: true
+        type: string
       platform_name:
         required: true
         type: string
@@ -30,6 +33,7 @@ env:
   BUILD_TYPE: ${{inputs.build_type}}
 jobs:
   build:
+    name: ${{inputs.name}}
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3

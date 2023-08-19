@@ -24,6 +24,7 @@ jobs:
     name: Linux x64/GCC 11
     uses: karmakrafts/workflows/.github/workflows/gcc.yml@master
     with:
+      name: Linux x64/GCC 11
       platform_name: ubuntu-20
       image_name: ubuntu-20.04
       std_version: ${{inputs.std_version}}
@@ -35,6 +36,7 @@ jobs:
     name: Linux x64/GCC 12
     uses: karmakrafts/workflows/.github/workflows/gcc.yml@master
     with:
+      name: Linux x64/GCC 12
       platform_name: ubuntu-22
       image_name: ubuntu-22.04
       std_version: ${{inputs.std_version}}
@@ -46,6 +48,7 @@ jobs:
     name: Linux x64/Clang 15
     uses: karmakrafts/workflows/.github/workflows/clang.yml@master
     with:
+      name: Linux x64/Clang 15
       platform_name: ubuntu-20
       image_name: ubuntu-20.04
       std_version: ${{inputs.std_version}}
@@ -59,6 +62,7 @@ jobs:
     name: macOS 11 x64/Clang 13
     uses: karmakrafts/workflows/.github/workflows/clang-macos.yml@master
     with:
+      name: macOS 11 x64/Clang 13
       platform_name: macos-11
       image_name: macos-11
       std_version: ${{inputs.std_version}}
@@ -69,6 +73,7 @@ jobs:
     name: macOS 12 x64/Clang 14
     uses: karmakrafts/workflows/.github/workflows/clang-macos.yml@master
     with:
+      name: macOS 12 x64/Clang 14
       platform_name: macos-12
       image_name: macos-12
       std_version: ${{inputs.std_version}}
@@ -79,6 +84,7 @@ jobs:
     name: macOS 13 x64/Clang 14
     uses: karmakrafts/workflows/.github/workflows/clang-macos.yml@master
     with:
+      name: macOS 13 x64/Clang 14
       platform_name: macos-13
       image_name: macos-13
       std_version: ${{inputs.std_version}}
@@ -91,6 +97,7 @@ jobs:
     name: Windows x64/MSVC 19.29
     uses: karmakrafts/workflows/.github/workflows/msvc.yml@master
     with:
+      name: Windows x64/MSVC 19.29
       platform_name: windows-2019
       image_name: windows-2019
       std_version: ${{inputs.std_version}}
@@ -101,6 +108,7 @@ jobs:
     name: Windows x64/MSVC 19.35
     uses: karmakrafts/workflows/.github/workflows/msvc.yml@master
     with:
+      name: Windows x64/MSVC 19.35
       platform_name: windows-2022
       image_name: windows-2022
       std_version: ${{inputs.std_version}}
@@ -111,6 +119,7 @@ jobs:
     name: Windows x64/Clang 15
     uses: karmakrafts/workflows/.github/workflows/clang-windows.yml@master
     with:
+      name: Windows x64/Clang 15
       platform_name: windows-2022
       image_name: windows-2022
       std_version: ${{inputs.std_version}}
