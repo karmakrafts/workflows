@@ -28,6 +28,8 @@ on:
         default: "Debug"
 env:
   BUILD_TYPE: ${{inputs.build_type}}
+  CC: "clang-${{inputs.version}}"
+  CXX: "clang++-${{inputs.version}}"
 jobs:
   build:
     name: ${{inputs.name}}
