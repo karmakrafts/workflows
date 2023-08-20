@@ -57,14 +57,14 @@ jobs:
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
 
-  linux-arm64-clang17:
-    name: Linux arm64/Clang 17
+  linux-arm64-clang13:
+    name: Linux arm64/Clang 13
     uses: karmakrafts/workflows/.github/workflows/clang-pi.yml@master
     with:
-      name: Linux arm64/Clang 17
+      name: Linux arm64/Clang 13
       platform_name: debian-11-arm64
       std_version: ${{inputs.std_version}}
-      version: 17
+      version: 13
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
