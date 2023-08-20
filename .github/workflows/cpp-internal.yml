@@ -68,14 +68,14 @@ jobs:
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
-  linux-riscv64-clang17:
-    name: Linux riscv64/Clang 17
+  linux-riscv64-clang15:
+    name: Linux riscv64/Clang 15
     uses: karmakrafts/workflows/.github/workflows/clang-starfive.yml@master
     with:
-      name: Linux riscv64/Clang 17
+      name: Linux riscv64/Clang 15
       platform_name: debian-11-riscv64
       std_version: ${{inputs.std_version}}
-      version: 17
+      version: 15
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
