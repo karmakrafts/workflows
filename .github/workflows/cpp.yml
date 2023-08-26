@@ -21,11 +21,11 @@ on:
 jobs:
   # Linux
   linux-x64-gcc12:
-    name: Linux x64/GCC 12
+    name: Linux x64/GCC
     uses: karmakrafts/workflows/.github/workflows/gcc.yml@master
     with:
-      name: Linux x64/GCC 12
-      platform_name: ubuntu-22
+      name: Linux x64/GCC
+      platform_name: linux-x64-gcc
       image_name: ubuntu-22.04
       std_version: ${{inputs.std_version}}
       version: 12
@@ -33,34 +33,34 @@ jobs:
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
   linux-x64-clang15:
-    name: Linux x64/Clang 15
+    name: Linux x64/Clang
     uses: karmakrafts/workflows/.github/workflows/clang.yml@master
     with:
-      name: Linux x64/Clang 15
-      platform_name: ubuntu-20
+      name: Linux x64/Clang
+      platform_name: linux-x64-clang
       image_name: ubuntu-20.04
       std_version: ${{inputs.std_version}}
       version: 15
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
-  linux-arm64-clang17:
-    name: Linux arm64/Clang 17
+  linux-arm64-clang:
+    name: Linux arm64/Clang
     uses: karmakrafts/workflows/.github/workflows/clang-pi.yml@master
     with:
-      name: Linux arm64/Clang 17
-      platform_name: debian-11-arm64
+      name: Linux arm64/Clang
+      platform_name: linux-arm64-clang
       std_version: ${{inputs.std_version}}
       version: 17
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
-  linux-riscv64-clang15:
-    name: Linux riscv64/Clang 15
+  linux-riscv64-clang:
+    name: Linux riscv64/Clang
     uses: karmakrafts/workflows/.github/workflows/clang-starfive.yml@master
     with:
-      name: Linux riscv64/Clang 15
-      platform_name: debian-11-riscv64
+      name: Linux riscv64/Clang
+      platform_name: linux-riscv64-clang
       std_version: ${{inputs.std_version}}
       version: 15
       cmake_args: ${{inputs.cmake_args}}
@@ -68,12 +68,12 @@ jobs:
       build_type: ${{inputs.build_type}}
 
   # MacOS
-  macos13-x64-clang:
-    name: macOS 13 x64/Clang 14
+  macos-x64-clang:
+    name: macOS x64/Clang
     uses: karmakrafts/workflows/.github/workflows/clang-macos.yml@master
     with:
-      name: macOS 13 x64/Clang 14
-      platform_name: macos-13
+      name: macOS x64/Clang
+      platform_name: macos-x64-clang
       image_name: macos-13
       std_version: ${{inputs.std_version}}
       cmake_args: ${{inputs.cmake_args}}
@@ -81,23 +81,23 @@ jobs:
       build_type: ${{inputs.build_type}}
 
   # Windows
-  windows-x64-msvc19-35:
-    name: Windows x64/MSVC 19.35
+  windows-x64-msvc:
+    name: Windows x64/MSVC
     uses: karmakrafts/workflows/.github/workflows/msvc.yml@master
     with:
-      name: Windows x64/MSVC 19.35
-      platform_name: windows-2022
+      name: Windows x64/MSVC
+      platform_name: windows-x64-msvc
       image_name: windows-2022
       std_version: ${{inputs.std_version}}
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
   windows-x64-clang:
-    name: Windows x64/Clang 15
+    name: Windows x64/Clang
     uses: karmakrafts/workflows/.github/workflows/clang-windows.yml@master
     with:
-      name: Windows x64/Clang 15
-      platform_name: windows-2022
+      name: Windows x64/Clang
+      platform_name: windows-x64-clang
       image_name: windows-2022
       std_version: ${{inputs.std_version}}
       version: 15
