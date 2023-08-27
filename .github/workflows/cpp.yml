@@ -100,7 +100,7 @@ jobs:
       platform_name: windows-x64-clang
       image_name: windows-2022
       std_version: ${{inputs.std_version}}
-      version: 15
+      version: 17
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
