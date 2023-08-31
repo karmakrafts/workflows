@@ -39,8 +39,6 @@ jobs:
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
-      - name: Initialize submodules
-        run: git submodule update --init
       - name: Install GCC ${{inputs.version}}
         run: sudo apt install -y gcc-${{inputs.version}} g++-${{inputs.version}}
       - name: Configure CMake (${{inputs.platform_name}})

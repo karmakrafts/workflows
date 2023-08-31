@@ -28,16 +28,14 @@ on:
         default: "Debug"
 env:
   BUILD_TYPE: ${{inputs.build_type}}
-  CC: "clang-${{inputs.version}}"
-  CXX: "clang++-${{inputs.version}}"
+  CC: "/usr/bin/clang-${{inputs.version}}"
+  CXX: "/usr/bin/clang++-${{inputs.version}}"
 jobs:
   build:
     name: ${{inputs.name}}
     runs-on: ["riscv64"]
     steps:
       - uses: actions/checkout@v3
-      - name: Initialize Submodules
-        run: git submodule update --init
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
           cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}

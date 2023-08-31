@@ -48,8 +48,6 @@ jobs:
         with:
           version: ${{inputs.version}}
           cached: ${{steps.cache-llvm.outputs.cache-hit}}
-      - name: Initialize submodules
-        run: git submodule update --init
       - uses: seanmiddleditch/gha-setup-ninja@master
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
