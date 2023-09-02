@@ -48,13 +48,15 @@ jobs:
           cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -DCMAKE_CXX_STANDARD=${{inputs.std_version}}
+          -DCMAKE_C_FLAGS="-m32"
           -DCMAKE_CXX_FLAGS="-m32"
+          -DCMAKE_FIND_ROOT_PATH=/usr/i686-linux-gnu
           ${{inputs.cmake_args}}
       - name: Build (${{inputs.platform_name}})
         run: >-
           cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}
           --config ${{env.BUILD_TYPE}}
-          --parallel $NUM_THREADS
+          --parallel ${{env.NUM_THREADS}}
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}
         run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}

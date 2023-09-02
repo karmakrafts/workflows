@@ -1,4 +1,4 @@
-name: Clang
+name: MSVC
 on:
   workflow_call:
     inputs:
@@ -12,9 +12,6 @@ on:
         required: true
         type: string
       std_version:
-        required: true
-        type: string
-      version:
         required: true
         type: string
       cmake_args:
@@ -31,41 +28,23 @@ on:
         default: "Debug"
 env:
   BUILD_TYPE: ${{inputs.build_type}}
-  CC: "/usr/bin/clang-${{inputs.version}}"
-  CXX: "/usr/bin/clang++-${{inputs.version}}"
 jobs:
   build:
     name: ${{inputs.name}}
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
-      - name: Detect number of cores/threads
-        run: export NUM_THREADS=$(grep -c ^processor /proc/cpuinfo)
-      - name: Cache LLVM & Clang
-        id: cache-llvm
-        uses: actions/cache@v3
-        with:
-          path: ./llvm
-          key: llvm-${{inputs.version}}
-      - name: Install LLVM & Clang
-        uses: KyleMayes/install-llvm-action@v1
-        with:
-          version: ${{inputs.version}}
-          env: true
-          cached: ${{steps.cache-llvm.outputs.cache-hit}}
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
-          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
-          -DCMAKE_CXX_FLAGS=-stdlib=libc++
+          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}} -A Win32
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-          -DGTEST_USE_OWN_TR1_TUPLE=1
           -DCMAKE_CXX_STANDARD=${{inputs.std_version}}
           ${{inputs.cmake_args}}
       - name: Build (${{inputs.platform_name}})
         run: >-
-          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
+          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}
           --config ${{env.BUILD_TYPE}}
-          --parallel ${{env.NUM_THREADS}}
+          --parallel ${{env.NUMBER_OF_PROCESSORS}}
       - name: Test (${{inputs.platform_name}})
-        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
+        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}
         run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}

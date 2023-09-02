@@ -50,7 +50,7 @@ jobs:
         run: >-
           cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
           --config ${{env.BUILD_TYPE}}
-          --parallel $NUM_THREADS
+          --parallel ${{env.NUM_THREADS}}
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
         run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}
