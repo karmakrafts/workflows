@@ -20,6 +20,18 @@ on:
         default: 20
 jobs:
   # Linux
+  linux-x86-gcc:
+    name: Linux x86/GCC
+    uses: karmakrafts/workflows/.github/workflows/gcc32.yml@master
+    with:
+      name: Linux x86/GCC
+      platform_name: linux-x86-gcc
+      image_name: ubuntu-22.04
+      std_version: ${{inputs.std_version}}
+      version: 12
+      cmake_args: ${{inputs.cmake_args}}
+      ctest_args: ${{inputs.ctest_args}}
+      build_type: ${{inputs.build_type}}
   linux-x64-gcc:
     name: Linux x64/GCC
     uses: karmakrafts/workflows/.github/workflows/gcc.yml@master

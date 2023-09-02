@@ -1,4 +1,4 @@
-name: Clang
+name: GCC
 on:
   workflow_call:
     inputs:
@@ -6,6 +6,9 @@ on:
         required: true
         type: string
       platform_name:
+        required: true
+        type: string
+      image_name:
         required: true
         type: string
       std_version:
@@ -28,29 +31,30 @@ on:
         default: "Debug"
 env:
   BUILD_TYPE: ${{inputs.build_type}}
-  CC: "/usr/bin/clang-${{inputs.version}}"
-  CXX: "/usr/bin/clang++-${{inputs.version}}"
+  CC: /usr/bin/gcc-${{inputs.version}}
+  CXX: /usr/bin/g++-${{inputs.version}}
 jobs:
   build:
     name: ${{inputs.name}}
-    runs-on: ["riscv64"]
+    runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
       - name: Detect number of cores/threads
         run: export NUM_THREADS=$(grep -c ^processor /proc/cpuinfo)
+      - name: Install GCC ${{inputs.version}}
+        run: sudo apt install -y gcc-${{inputs.version}} gcc-multilib g++-${{inputs.version}} g++-multilib
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
-          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
-          -DCMAKE_CXX_FLAGS=-stdlib=libc++
+          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-          -DGTEST_USE_OWN_TR1_TUPLE=1
           -DCMAKE_CXX_STANDARD=${{inputs.std_version}}
+          -DCMAKE_CXX_FLAGS="-m32"
           ${{inputs.cmake_args}}
       - name: Build (${{inputs.platform_name}})
         run: >-
-          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
+          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}
           --config ${{env.BUILD_TYPE}}
           --parallel $NUM_THREADS
       - name: Test (${{inputs.platform_name}})
-        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
+        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}
         run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}
