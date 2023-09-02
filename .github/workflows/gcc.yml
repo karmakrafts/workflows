@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Detect number of cores/threads
-        run: export NUM_THREADS=$(grep ^cpu\\scores /proc/cpuinfo | uniq |  awk '{print $4}')
+        run: export NUM_THREADS=$(grep -c ^processor /proc/cpuinfo)
       - name: Install GCC ${{inputs.version}}
         run: sudo apt install -y gcc-${{inputs.version}} g++-${{inputs.version}}
       - name: Configure CMake (${{inputs.platform_name}})

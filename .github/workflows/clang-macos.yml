@@ -34,6 +34,8 @@ jobs:
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
+      - name: Detect number of cores/threads
+        run: export NUM_THREADS=$(grep -c ^processor /proc/cpuinfo)
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
           cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}
@@ -44,6 +46,7 @@ jobs:
         run: >-
           cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}
           --config ${{env.BUILD_TYPE}}
+          -- -j $NUM_THREADS
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}
         run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}

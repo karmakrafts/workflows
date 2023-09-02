@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Detect number of cores/threads
-        run: export NUM_THREADS=$(grep ^cpu\\scores /proc/cpuinfo | uniq |  awk '{print $4}')
+        run: export NUM_THREADS=$(grep -c ^processor /proc/cpuinfo)
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
           cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
