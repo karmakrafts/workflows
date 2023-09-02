@@ -2,7 +2,7 @@ name: Clang
 on:
   workflow_call:
     inputs:
-      name: 
+      name:
         required: true
         type: string
       platform_name:
@@ -48,6 +48,7 @@ jobs:
         run: >-
           cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
           --config ${{env.BUILD_TYPE}}
+          -- -j 2
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
         run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}
