@@ -36,6 +36,8 @@ jobs:
     runs-on: ["riscv64"]
     steps:
       - uses: actions/checkout@v3
+      - name: Detect number of cores/threads
+        run: export NUM_THREADS=$(grep ^cpu\\scores /proc/cpuinfo | uniq |  awk '{print $4}')
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
           cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
@@ -48,7 +50,7 @@ jobs:
         run: >-
           cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
           --config ${{env.BUILD_TYPE}}
-          -- -j 2
+          -- -j $NUM_THREADS
       - name: Test (${{inputs.platform_name}})
         working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
         run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}
