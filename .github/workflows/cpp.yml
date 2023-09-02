@@ -38,9 +38,9 @@ jobs:
     with:
       name: Linux x64/Clang
       platform_name: linux-x64-clang
-      image_name: ubuntu-20.04
+      image_name: ubuntu-22.04
       std_version: ${{inputs.std_version}}
-      version: 16
+      version: 17
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}

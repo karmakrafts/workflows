@@ -39,8 +39,6 @@ jobs:
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
-      - name: Install GCC12
-        run: sudo apt install -y gcc-12
       - name: Cache LLVM & Clang
         id: cache-llvm
         uses: actions/cache@v3
