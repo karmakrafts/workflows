@@ -40,7 +40,7 @@ jobs:
       platform_name: linux-x64-clang
       image_name: ubuntu-22.04
       std_version: ${{inputs.std_version}}
-      version: 17
+      version: 15
       cmake_args: ${{inputs.cmake_args}}
       ctest_args: ${{inputs.ctest_args}}
       build_type: ${{inputs.build_type}}
