@@ -39,8 +39,6 @@ jobs:
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
-      - name: Detect number of cores/threads
-        run: export NUM_THREADS=$(grep -c ^processor /proc/cpuinfo)
       - name: Cache LLVM & Clang
         id: cache-llvm
         uses: actions/cache@v3
@@ -55,7 +53,7 @@ jobs:
           cached: ${{steps.cache-llvm.outputs.cache-hit}}
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
-          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
+          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-cpp${{inputs.std_version}}
           -DCMAKE_CXX_FLAGS=-stdlib=libc++
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -DGTEST_USE_OWN_TR1_TUPLE=1
@@ -63,9 +61,11 @@ jobs:
           ${{inputs.cmake_args}}
       - name: Build (${{inputs.platform_name}})
         run: >-
-          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
+          export NUM_THREADS=$(grep -c ^processor /proc/cpuinfo)
+          && echo "Building with $NUM_THREADS threads"
+          && cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-cpp${{inputs.std_version}}
           --config ${{env.BUILD_TYPE}}
-          --parallel ${{env.NUM_THREADS}}
+          --parallel $NUM_THREADS
       - name: Test (${{inputs.platform_name}})
-        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-clang-cpp${{inputs.std_version}}
+        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-cpp${{inputs.std_version}}
         run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}

@@ -39,21 +39,21 @@ jobs:
     runs-on: ${{inputs.image_name}}
     steps:
       - uses: actions/checkout@v3
-      - name: Detect number of cores/threads
-        run: export NUM_THREADS=$(grep -c ^processor /proc/cpuinfo)
       - name: Install GCC ${{inputs.version}}
         run: sudo apt install -y gcc-${{inputs.version}} g++-${{inputs.version}}
       - name: Configure CMake (${{inputs.platform_name}})
         run: >-
-          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}
+          cmake -B ${{github.workspace}}/build-${{inputs.platform_name}}-cpp${{inputs.std_version}}
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -DCMAKE_CXX_STANDARD=${{inputs.std_version}}
           ${{inputs.cmake_args}}
       - name: Build (${{inputs.platform_name}})
         run: >-
-          cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}
+          export NUM_THREADS=$(grep -c ^processor /proc/cpuinfo)
+          && echo "Building with $NUM_THREADS threads"
+          && cmake --build ${{github.workspace}}/build-${{inputs.platform_name}}-cpp${{inputs.std_version}}
           --config ${{env.BUILD_TYPE}}
-          --parallel ${{env.NUM_THREADS}}
+          --parallel $NUM_THREADS
       - name: Test (${{inputs.platform_name}})
-        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}
+        working-directory: ${{github.workspace}}/build-${{inputs.platform_name}}-cpp${{inputs.std_version}}
         run: ctest -C ${{env.BUILD_TYPE}} ${{inputs.ctest_args}}
